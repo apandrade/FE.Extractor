@@ -36,7 +36,7 @@
       <Panel header="Top 10 words">
         <div class="card">
             <h5>Vertical</h5>
-            <Chart type="bar" :data="chartData" :options="chartOptions" />
+            <Chart type="bar" :data="chartData" :options="chartOptions" ref="chart" />
         </div>
       </Panel>
     </div>
@@ -91,6 +91,7 @@ export default {
         console.log('Response:', response.data);
         response.data.words
         this.processResponse(response.data);
+        this.$refs.chart.refresh();
         this.loading=false;
 
       }).catch((error) => {
@@ -111,6 +112,9 @@ export default {
     mountChartData(words) {
 
       console.log("ReceivedWords:", words);
+      if(!words) {
+        this.showErrorMessage('Something went wrong, words is empty.')
+      }
 
         words.forEach((item,index) => {          
           this.wordData.labels[index] = item.word;
@@ -123,7 +127,7 @@ export default {
           itemData.data[index] = item.count;
           this.wordData.datasets[index] = itemData;
         });
-        
+
         console.log("ChartData:", this.chartData);
     },
 
