@@ -8,7 +8,7 @@
       <Fieldset legend="Type the URL">
         <div class="p-fluid p-formgrid p-grid">
           <div class="p-field p-col-12 p-md-9">
-              <InputText id="firstname" type="text" :class="{'p-invalid': invalid}" v-model="url" />
+              <InputText id="firstname" type="text" :class="{'p-invalid': invalid}" v-model="url" @keyup.enter="getData" />
           </div>
           <div class="p-field p-col-1" id="switch">
               <InputSwitch v-model="download" />
@@ -25,7 +25,7 @@
   </div>
   <div class="p-grid">
     <div class="p-col-12 p-md-6">
-      <Panel header="All Images">
+      <Panel header="Images">
         <ScrollPanel style="width: 100%; height: 500px">
             <img v-for="(image, index) in images" :key=index :src="image.src" :alt="image.alt" /> 
         </ScrollPanel>
@@ -33,9 +33,8 @@
 
     </div>
     <div class="p-col-12 p-md-6">
-      <Panel header="Top 10 words">
+      <Panel header="Words">
         <div class="card">
-            <h5>Vertical</h5>
             <Chart type="bar" :data="chartData" :options="chartOptions" ref="chart" />
         </div>
       </Panel>
@@ -60,9 +59,23 @@ export default {
           labels: [],
           datasets: []
       },
-      chartOptions: null
+      chartOptions: {
+          hoverMode: 'index',
+          responsive: true,
+          scales: {
+              xAxes: [{
+                  barThickness : 10
+              }],
+              yAxes: [{
+                  ticks: {
+                    beginAtZero: true,
+                  }
+                }]
+          },
+      }
 		}
 	},
+
   computed: {
     chartData: function() {
       return this.wordData;
@@ -76,7 +89,7 @@ export default {
       }
 
       const payload = {
-        url:this.url,
+        url:this.url.trim(),
         download: this.download,
       }      
       var apiUrl = process.env.VUE_APP_API_URL;
@@ -159,5 +172,9 @@ export default {
 #overlay.visible {
   display: flex;
   align-items: center;
+}
+
+.p-panel-header {
+  justify-content: center !important;
 }
 </style>
