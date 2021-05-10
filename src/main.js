@@ -14,8 +14,9 @@ import Chart from 'primevue/chart';
 import ProgressSpinner from 'primevue/progressspinner';
 import ToastService from 'primevue/toastservice';
 import Toast from 'primevue/toast';
-import axios from 'axios'
-import VueAxios from 'vue-axios'
+import axios from 'axios';
+import VueAxios from 'vue-axios';
+import titleMixin from './mixins/titleMixin';
 
 import 'primevue/resources/themes/saga-blue/theme.css'
 import 'primevue/resources/primevue.min.css'
@@ -38,5 +39,6 @@ app.component('InputSwitch', InputSwitch);
 app.component('Chart', Chart);
 app.component('ProgressSpinner', ProgressSpinner);
 app.component('Toast', Toast);
+app.mixin(titleMixin);
 app.mount('#app');
 

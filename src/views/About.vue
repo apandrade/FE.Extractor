@@ -14,3 +14,9 @@
   </div>
 
 </template>
+
+<script>
+export default {
+  title: 'About',
+}
+</script>

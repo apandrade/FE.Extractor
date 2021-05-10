@@ -47,6 +47,7 @@
 import axios from 'axios';
 
 export default {
+  title: 'Home',
 	data() {
 		return {
 			download: true,
@@ -73,51 +74,63 @@ export default {
         this.showErrorMessage('Please type a valid URL');
         return;
       }
+
       const payload = {
         url:this.url,
         download: this.download,
-      }
-      var url = process.env.VUE_APP_API_URL;
-      console.log(url);
-      console.log(payload);
-      this.loading=true;
-      axios.post(url, payload).then((response) => {        
+      }      
+      var apiUrl = process.env.VUE_APP_API_URL;
+
+      console.log('ApiUrl:', apiUrl);
+      console.log('Payload:', payload);
+
+      this.loading=true;      
+      axios.post(apiUrl, payload).then((response) => {  
+
         this.clearForm();
-        console.log(response.data);
-        console.log("chartData", this.chartData)
+        console.log('Response:', response.data);
         response.data.words
         this.processResponse(response.data);
         this.loading=false;
+
       }).catch((error) => {
+
         console.log(error);
         const message = error.message || "An error occurred when trying to fetch data";
         this.loading=false;
         this.showErrorMessage(message);
+
       })
     },
+
     processResponse(response) {
       this.images = response.images;
       this.mountChartData(response.words);
     },
+
     mountChartData(words) {
-      console.log("words", words);
-        words.forEach((item,index) => {
-          console.log("item", item);
-          console.log("index", index);
+
+      console.log("ReceivedWords:", words);
+
+        words.forEach((item,index) => {          
           this.wordData.labels[index] = item.word;
           let itemData = {
             label: item.word,
             backgroundColor: this.bgColors[index],
             data: Array(10),
           }
+
           itemData.data[index] = item.count;
           this.wordData.datasets[index] = itemData;
         });
-        console.log("chartData", this.chartData);
+        
+        console.log("ChartData:", this.chartData);
     },
+
     clearForm(){
       this.value = "";      
     },
+
     showErrorMessage(message){
       this.$toast.add({severity:'error', summary: 'Sorry', detail: message, life: 3000});
     }
