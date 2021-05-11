@@ -69,4 +69,9 @@ export default {
   font-weight: bold;
   color: black
 }
+
+.p-menubar-button {
+  position: absolute;
+  right: 0;
+}
 </style>
