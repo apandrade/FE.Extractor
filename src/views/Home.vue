@@ -26,7 +26,7 @@
   <div class="p-grid">
     <div class="p-col-12 p-md-6">
       <Panel header="Images">
-        <ScrollPanel style="width: 100%; height: 500px">
+        <ScrollPanel>
             <img v-for="(image, index) in images" :key=index :src="image.src" :alt="image.alt" /> 
         </ScrollPanel>
       </Panel>
@@ -177,4 +177,13 @@ export default {
 .p-panel-header {
   justify-content: center !important;
 }
+
+.p-panel .p-panel-content {
+  height: 530px;
+}
+.p-scrollpanel {
+  width: 100%; 
+  height: 500px;
+}
+
 </style>
