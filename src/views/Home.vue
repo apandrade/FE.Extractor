@@ -33,7 +33,7 @@
 
     </div>
     <div class="p-col-12 p-md-6">
-      <Panel header="Words">
+      <Panel header="Words" id="wordPanel">
         <div class="card">
             <Chart type="bar" :data="chartData" :options="chartOptions" ref="chart" />
         </div>
@@ -62,9 +62,12 @@ export default {
       chartOptions: {
           hoverMode: 'index',
           responsive: true,
+          legend: {
+            display: false
+          },
           scales: {
               xAxes: [{
-                  barThickness : 10
+                  barThickness : 5
               }],
               yAxes: [{
                   ticks: {
@@ -156,6 +159,11 @@ export default {
 </script>
 
 <style>
+@media (max-width: 767px) {
+  #wordPanel.p-panel .p-panel-content {
+    height: 250px;
+  }
+}
 #switch {
   max-width: 100px;
 }
@@ -174,13 +182,14 @@ export default {
   align-items: center;
 }
 
+.p-panel .p-panel-content {
+  height: 530px;
+}
+
 .p-panel-header {
   justify-content: center !important;
 }
 
-.p-panel .p-panel-content {
-  height: 530px;
-}
 .p-scrollpanel {
   width: 100%; 
   height: 500px;
